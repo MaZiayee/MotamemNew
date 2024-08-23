@@ -8,8 +8,8 @@ class Post(models.Model):
     content = models.TextField()
     image = models.ImageField(null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True) 
-    # tag
-    category= models.ForeignKey('Category',on_delete=models.SET_NULL,null=True)
+    tags = models.ManyToManyField('Tag', related_name='posts')
+    categories = models.ManyToManyField('Category', related_name='posts')
     counted_views = models.IntegerField(default=0)
     status = models.BooleanField(default=False)
     published_date = models.DateTimeField(null=True)
@@ -25,3 +25,9 @@ class Category(models.Model):
     
     def __str__(self):
         return "{} - {}".format(self.id,self.name)
+
+class Tag(models.Model):
+    name = models.CharField(max_length=250, unique=True)
+
+    def __str__(self):
+        return self.name

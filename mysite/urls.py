@@ -18,11 +18,17 @@ from django.contrib import admin
 from django.urls import path ,include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('website.urls')),
-    path('api/blog/',include('blog.urls'))
+    path('api/blog/',include('blog.urls')),
+    path('jwt/create/', TokenObtainPairView.as_view(), name='jwt-create'),
+    path('jwt/refresh/', TokenRefreshView.as_view(), name='jwt-refresh')
 ]
 
 if settings.DEBUG:
